@@ -21,7 +21,6 @@ let dropDownData = {}
 let dropDownBtn = {}
 let currentData = {};
 let sunData = {}
-let airQualityData = {}
 let humidityArr = [];
 let tempArr = [];
 let averageTemp = 0;
@@ -223,11 +222,9 @@ function mainPage(data, sortArr){
             <div><img src="./Img/sunrise.jpg" alt="logo"> Sunrise ${sunData.sunrise.replace(sunrise[0], Number(sunrise[0]) + gmtTime)}</div>
             <div><img src="./Img/sunset.jpg" alt="logo"> Sunset ${sunData.sunset.replace(sunset[0], Number(sunset[0]) + gmtTime)}</div>
             <div>The day is long ${sunData.day_length}</div>
-            <div>pm10 = ${airQualityData.data.iaqi.pm10.v}</div>
-            <div>pm2.5 = ${airQualityData.data.iaqi.pm25.v}</div>
+            
         </div>
     `
-    //Sunrise and Sunset data is not correct
     chart[0].style.height = `${chartTempHot}%`
     chart[1].style.height = `${chartTempCold}%`
     chart[1].style.backgroundColor = `blue`
@@ -301,12 +298,6 @@ async function getSun(city){
         .then((response) => response.json())
         .then((documents) => {
                 sunData = documents.results
-            })
-        let airQualityUrl = `http://api.waqi.info/feed/skopje/?token=2a0b6013711cf98ff4cbd122fa7b446039e4e37f`
-        await fetch(airQualityUrl)
-            .then((response) => response.json())
-            .then((documents) => {
-                airQualityData = documents
             })
         responseList = cityCall.list;
         cityData = cityCall.city
