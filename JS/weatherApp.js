@@ -56,7 +56,7 @@ function btnSelector(number, showSearch, show$Block, height){
     })
 }
 
-btnSelector(0, `block`, `url("../WeatherAppJS/Img/sunSetCloudy.jpg")`, `390px`)
+btnSelector(0, `block`, `url("https://wallpaperplay.com/walls/full/d/0/5/221356.jpg")`, `390px`)
 btnSelector(1, `none`, `none`, `90px`)
 btnSelector(2, `none`, `none`, `90px`)
 btnSelector(3, `none`, `none`, `90px`)
@@ -285,7 +285,7 @@ function clickButton(button, array){
 }}
 
 async function getSun(city){
-    myGif.innerHTML = `<img id="gif"src="../WeatherAppJS/Img/blueGif.gif" alt="logo"></img>`
+    myGif.innerHTML = `<img id="gif"src="https://i.imgur.com/1VSImGw.gif" alt="logo"></img>`
     let gif = document.getElementById(`gif`)
     gif.style.height = `40px`
     gif.style.opacity = `0.5`
