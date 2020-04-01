@@ -21,7 +21,6 @@ let dropDownData = {}
 let dropDownBtn = {}
 let currentData = {};
 let sunData = {}
-let timeZoneData = {}
 let airQualityData = {}
 let humidityArr = [];
 let tempArr = [];
@@ -110,13 +109,14 @@ function getHour(hours){
             rainyHour = hour.rain[`3h`]
         }
         myTable.innerHTML += `
-            <div id = "dropDown" class="row rowContainer">
+            <div id = "dropDown" class="row rowContainer boxHover">
                 <div class="col-md-2">${hourDate.slice(11,16)}<br><span>${hourDate.slice(5,7)}/${hourDate.slice(8,10)}<span></div>
                 <div class="col-md-1"><img src="http://openweathermap.org/img/w/${hour.weather[0].icon}.png" alt="logo"></div>
                 <div class="col-md-7 tempLeft ">${Math.round(temperature)} °C</div>
                 <div class= "col-md-2 dropDownBtn">&#x2BC6</div>
             </div>
 
+            <div class="dropdown-data">
             <div id = "dropDownData" class = "dropDownData">
                 <div id = "dropDownLeft" class = "">
                     <div>Real Feel: ${Math.round(hour.main.feels_like)}</div>
@@ -128,6 +128,7 @@ function getHour(hours){
                     <div>Cloud coverage: ${hour.clouds.all}</div>
                     <div>Rain: ${rainyHour} mm</div>
                 </div>
+            </div>
             </div>
         `
         mySortTable.innerHTML += `
@@ -169,7 +170,7 @@ function mainPage(data, sortArr){
     let tomorrowTemp = getAverage(averageTemp, tempArr, 5, 10)
     let chart = document.getElementsByClassName(`chart`)
     let chartBox = document.getElementsByClassName(`box`)
-    let gmtTime = timeZoneData.gmtOffset / 3600
+    let gmtTime = cityData.timezone / 3600
     let sunrise = sunData.sunrise.split("")
     let sunset = sunData.sunset.split("")
 
@@ -233,9 +234,9 @@ function mainPage(data, sortArr){
     chartBox[0].style.backgroundColor = `red`
     chartBox[1].style.backgroundColor = `blue`
     if(inputValue !== ""){
-        dataResultButton.innerText = `${cityData.name}, ${timeZoneData.countryName} ${Math.round(data[0].main.temp)}°C`
+        dataResultButton.innerText = `${cityData.name}, ${cityData.country} ${Math.round(data[0].main.temp)}°C`
     } else {
-        dataResultButton.innerText = `${cityData.name}, ${timeZoneData.countryName} ${Math.round(data[0].main.temp)}°C`
+        dataResultButton.innerText = `${cityData.name}, ${cityData.country} ${Math.round(data[0].main.temp)}°C`
     }
 }
 
@@ -301,20 +302,13 @@ async function getSun(city){
         .then((documents) => {
                 sunData = documents.results
             })
-        let timeZoneUrl = `http://api.timezonedb.com/v2.1/get-time-zone?key=Z7SWLAUP9MHO&format=json&by=position&lat=${cityCall.city.coord.lat}&lng=${cityCall.city.coord.lon}
-        `
-        await fetch(timeZoneUrl)
-            .then((response) => response.json())
-            .then((documents) => {
-                timeZoneData = documents
-            })
         let airQualityUrl = `http://api.waqi.info/feed/skopje/?token=2a0b6013711cf98ff4cbd122fa7b446039e4e37f`
         await fetch(airQualityUrl)
             .then((response) => response.json())
             .then((documents) => {
                 airQualityData = documents
             })
-        responseList = cityCall.list
+        responseList = cityCall.list;
         cityData = cityCall.city
         currentData = responseList;
         getHour(responseList)
@@ -325,6 +319,30 @@ async function getSun(city){
         resetAnimation(dataMessage)
         clickButton(myHotBtn, ascendingArray)
         clickButton(myColdBtn, descendingArray)
+        let cardBtn = document.getElementsByClassName(`rowContainer`)
+        let dropDownBtn = document.getElementsByClassName(`dropDownBtn`);
+        let dropDownData = document.getElementsByClassName(`dropdown-data`);
+        let counter = 0
+            for (let i = 0; i < dropDownBtn.length; i++) {
+                cardBtn[i].addEventListener(`click`, function() {
+                    if(counter === 0) {
+                        // cardBtn[i].classList.remove(`boxHover`);
+                        cardBtn[i].style.boxShadow = "0px 0px 7px grey"
+                        // cardBtn[i].focus()
+                        dropDownData[i].style.height = `130px`;
+                        dropDownBtn[i].innerHTML = `&#x2BC5`
+                        counter++
+                    } else {
+                        cardBtn[i].style.boxShadow = ``
+                        // cardBtn[i].classList.add(`boxHover`);
+                        dropDownData[i].style.height = `0px`
+                        dropDownBtn[i].innerHTML = `&#x2BC6`
+                        counter--
+                    }
+                })
+                
+            }
+        
     } catch(err) {
         console.log(err)
             clearInput(myInput, myGif)
