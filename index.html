@@ -30,7 +30,10 @@
         <a class="nav-link" href="#">About</a>
       </li>
     </ul>
+    
   </div>
+  <button id="navbarBtn" class="navbar-toggler navBtn" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
     </nav>
     <div id="formContainer">
       <form class="formPosition">
@@ -47,13 +50,12 @@
 
   <div id="myDiv">
     <div class="container page">
-      <div id="firstPageContainer" class="row">
+      <div id="firstPageContainer" class="row section-md-column">
         <div class = "col-md-2 temp"></div>
         <div class = "col-md-2 temp"></div>
         <div class = "col-md-2 temp"></div>
-        <div class = "col-md-1"></div>
-        <div class = "col-md-2 chartContainer position"></div>
-        <div class = "col-md-3 sunData"></div>
+        <div class = "col-md-2 chartContainer temp"></div>
+        <div class = "col-md-3 sunData temp"></div>
       </div>
     </div>
       <div class="fixed-bottom" id="bottomAlert"></div>
@@ -62,47 +64,48 @@
         <h1>Hour Cards</h1>
           <div id="container" class="hourPage"></div>
     </div>
-    <div class="container page">
+    <div class="container page background-control">
       <h1>Hourly Data</h1>
       <div class="row tableControl">
-        <div class="col-md-2">Icon</div>
-        <div class="col-md-2">Description</div>
-        <div class="col-md-2">Time</div>
-        <div class="col-md-2">
+        <div class="col-md-2 padding-overwrite">Icon</div>
+        <div class="col-md-2 padding-overwrite">Description</div>
+        <div class="col-md-2 padding-overwrite">Time</div>
+        <div class="col-md-2 padding-overwrite">
           Temperature
-          <button class="hottest"></button>
-          <button class="coldest"></button>
+          <button class="hottest button-style"></button>
+          <button class="coldest button-style"></button>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-2 padding-overwrite">
           Humidity
-          <button class="hottest"></button>
-          <button class="coldest"></button>
+          <button class="hottest button-style"></button>
+          <button class="coldest button-style"></button>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-2 padding-overwrite">
           Wind Speed
-          <button class="hottest"></button>
-          <button class="coldest"></button>
+          <button class="hottest button-style"></button>
+          <button class="coldest button-style"></button>
         </div>
     </div>
     <div id="containerData" class="hourPage"></div>
   </div>
-        <div class="container page aboutPage">
+        <div class="container page aboutPage background-control">
             <h1>A-CODE</h1>
-            <br>
-            <div class="row ">
-              <div class="col-md-2"></div>
-              <div class="col-md-8">
+              <div>
                 <p>Hello my name is Alen, i am currently studying web-development at Seavus. <br>
                     This is my first small weather application. <br>
-                    Contact: <a href="#">alenvatic7@gmail.com</a>
                 </p>
               </div>
-              <div class="col-md-2"></div>
+              <div class="position-contact-info">
+                Contact: <a href="#">alenvatic7@gmail.com</a>
+              </div>
             </div>
+            
         </div>
+        
+
     </div>
     <div class="footer-copyright text-center py-3">
-      <div><a href="https://sunrise-sunset.org/api">https://sunrise-sunset.org/api</a></div>
+      <div><a target="_blank" href="https://sunrise-sunset.org/api">https://sunrise-sunset.org/api</a></div>
     </div>
     <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>

@@ -27,6 +27,7 @@ let averageTemp = 0;
 let lastItem = 0;
 let firstItem = 0;
 let date = new Date();
+let body = document.querySelector(`body`)
 
 function hidePages(pages){
     for (let page of pages) {
@@ -56,10 +57,29 @@ function btnSelector(number, showSearch, show$Block, height){
     })
 }
 
+function backgroundImage(number, element) {
+    
+    myNav[number].addEventListener(`click`, function() {
+        if (number === 3) {
+            pages[3].style.display = `grid`
+        }
+        if(number === 0) {
+            element.style.backgroundImage = ``
+        } else {
+            element.style.backgroundImage = `url("https://hdwallpaper20.com/wp-content/uploads/2017/07/wallpaper-wp4001752.jpg")`
+            element.style.backgroundSize = `cover`
+        }
+    })
+}
+
 btnSelector(0, `block`, `url("https://wallpaperplay.com/walls/full/d/0/5/221356.jpg")`, `390px`)
-btnSelector(1, `none`, `none`, `90px`)
-btnSelector(2, `none`, `none`, `90px`)
-btnSelector(3, `none`, `none`, `90px`)
+backgroundImage(0, body)
+btnSelector(1, `none`, `none`, `70px`)
+backgroundImage(1, body)
+btnSelector(2, `none`, `none`, `70px`)
+backgroundImage(2, body)
+btnSelector(3, `none`, `none`, `70px`)
+backgroundImage(3, body)
 
 showPage(pages[0]);
 activePage(myNav, myNav[0]);
@@ -200,9 +220,8 @@ function mainPage(data, sortArr){
             ${setToUpperCase(data[7].weather[0].description)}
             <br> Feels like ${Math.round(data[7].main.feels_like)}°C
         </div>
-        <div class = "col-md-1"></div>
 
-        <div class = "col-md-2 chartContainer position">
+        <div class = "col-md-2 chartContainer temp">
             <div class = "weatherDescription">
                 <p>Hottest day <br>${firstItem.dt_txt.slice(5, 10)}<br>${Math.round(firstItem.main.temp)}°C</p>
                 <p>Coldest day <br>${lastItem.dt_txt.slice(5, 10)}<br>${Math.round(lastItem.main.temp)}°C</p>
@@ -218,7 +237,7 @@ function mainPage(data, sortArr){
                 <div class = "chart"></div>
             </div>
         </div>
-        <div class = "col-md-3 sunData">
+        <div class = "col-md-3 sunData temp">
             <div><img src="./Img/sunrise.jpg" alt="logo"> Sunrise ${sunData.sunrise.replace(sunrise[0], Number(sunrise[0]) + gmtTime)}</div>
             <div><img src="./Img/sunset.jpg" alt="logo"> Sunset ${sunData.sunset.replace(sunset[0], Number(sunset[0]) + gmtTime)}</div>
             <div>The day is long ${sunData.day_length}</div>
@@ -284,6 +303,29 @@ function clickButton(button, array){
             })  
 }}
 
+function cardTransition() {
+        let cardBtn = document.getElementsByClassName(`rowContainer`)
+        let dropDownBtn = document.getElementsByClassName(`dropDownBtn`);
+        let dropDownData = document.getElementsByClassName(`dropdown-data`);
+        let counter = 0
+            for (let i = 0; i < dropDownBtn.length; i++) {
+                cardBtn[i].addEventListener(`click`, function() {
+                    if(counter === 0) {
+                        cardBtn[i].style.boxShadow = "0px 0px 7px grey"
+                        dropDownData[i].style.height = `130px`;
+                        dropDownBtn[i].innerHTML = `&#x2BC5`
+                        counter++
+                    } else {
+                        cardBtn[i].style.boxShadow = ``
+                        dropDownData[i].style.height = `0px`
+                        dropDownBtn[i].innerHTML = `&#x2BC6`
+                        counter--
+                    }
+                })
+                
+            }
+}
+
 async function getSun(city){
     myGif.innerHTML = `<img id="gif"src="https://i.imgur.com/1VSImGw.gif" alt="logo"></img>`
     let gif = document.getElementById(`gif`)
@@ -308,32 +350,10 @@ async function getSun(city){
         clearInput(myInput, myGif)
         mySearchBtn.style.display = `block`
         resetAnimation(dataMessage)
-        clickButton(myHotBtn, ascendingArray)
-        clickButton(myColdBtn, descendingArray)
-        let cardBtn = document.getElementsByClassName(`rowContainer`)
-        let dropDownBtn = document.getElementsByClassName(`dropDownBtn`);
-        let dropDownData = document.getElementsByClassName(`dropdown-data`);
-        let counter = 0
-            for (let i = 0; i < dropDownBtn.length; i++) {
-                cardBtn[i].addEventListener(`click`, function() {
-                    if(counter === 0) {
-                        // cardBtn[i].classList.remove(`boxHover`);
-                        cardBtn[i].style.boxShadow = "0px 0px 7px grey"
-                        // cardBtn[i].focus()
-                        dropDownData[i].style.height = `130px`;
-                        dropDownBtn[i].innerHTML = `&#x2BC5`
-                        counter++
-                    } else {
-                        cardBtn[i].style.boxShadow = ``
-                        // cardBtn[i].classList.add(`boxHover`);
-                        dropDownData[i].style.height = `0px`
-                        dropDownBtn[i].innerHTML = `&#x2BC6`
-                        counter--
-                    }
-                })
-                
-            }
-        
+        clickButton(myHotBtn, ascendingArray);
+        clickButton(myColdBtn, descendingArray);
+        cardTransition();
+
     } catch(err) {
         console.log(err)
             clearInput(myInput, myGif)
